@@ -3,7 +3,7 @@
 A premium, modern full-stack application built to manage products, customers, and orders efficiently. Built with FastAPI (Python 3.11), SQLAlchemy, PostgreSQL, and React (Vite). Supports interactive dashboard analytics, stock validations, and automatic inventory adjustments.
 
 ### 🌐 Live Deployments
-- **Frontend App:** [https://inventory-order-management-system-three-ecru.vercel.app](https://inventory-order-management-system-three-ecru.vercel.app)
+- **Frontend App:** [https://inventory-order-management-system-git-main-roshangxhs-projects.vercel.app/](https://inventory-order-management-system-git-main-roshangxhs-projects.vercel.app/)
 - **Backend API:** [https://inventory-backend-latest-8t57.onrender.com](https://inventory-backend-latest-8t57.onrender.com)
 
 ---
