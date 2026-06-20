@@ -6,11 +6,12 @@ import {
   ShoppingBag, 
   Menu, 
   X,
-  Database
+  Database,
+  ChevronLeft
 } from 'lucide-react';
 
 export default function Layout({ children, activeTab, setActiveTab }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth > 768);
 
   const navigation = [
     { name: 'Dashboard', icon: LayoutDashboard, id: 'dashboard' },
@@ -21,12 +22,14 @@ export default function Layout({ children, activeTab, setActiveTab }) {
 
   const handleNavClick = (tabId) => {
     setActiveTab(tabId);
-    setSidebarOpen(false);
+    if (window.innerWidth <= 768) {
+      setSidebarOpen(false);
+    }
   };
 
   return (
-    <div className="layout-container">
-      {/* Mobile Menu Toggle Button */}
+    <div className={`layout-container ${sidebarOpen ? 'sidebar-open' : 'sidebar-closed'}`}>
+      {/* Mobile/Desktop Menu Toggle Button */}
       <button 
         className="menu-btn" 
         onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -37,9 +40,19 @@ export default function Layout({ children, activeTab, setActiveTab }) {
 
       {/* Sidebar Nav */}
       <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-        <div className="nav-logo" style={{ fontSize: '1.05rem', lineHeight: '1.3' }}>
-          <Database size={22} style={{ strokeWidth: 2.5, flexShrink: 0 }} />
-          <span>Inventory & Order Management System</span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px', gap: '12px' }}>
+          <div className="nav-logo" style={{ fontSize: '1.05rem', lineHeight: '1.3', margin: 0 }}>
+            <Database size={22} style={{ strokeWidth: 2.5, flexShrink: 0 }} />
+            <span>Inventory & Order Management System</span>
+          </div>
+          <button 
+            type="button"
+            className="sidebar-collapse-btn" 
+            onClick={() => setSidebarOpen(false)}
+            title="Collapse Sidebar"
+          >
+            <ChevronLeft size={18} />
+          </button>
         </div>
         <nav style={{ flex: 1 }}>
           <ul className="nav-links">
@@ -60,7 +73,6 @@ export default function Layout({ children, activeTab, setActiveTab }) {
             })}
           </ul>
         </nav>
-
       </aside>
 
       {/* Main Panel Content Area */}

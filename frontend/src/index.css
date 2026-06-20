@@ -135,15 +135,20 @@ body {
   bottom: 0;
   left: 0;
   z-index: 100;
-  transition: var(--transition);
+  transform: translateX(-100%);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.layout-container.sidebar-open .sidebar {
+  transform: translateX(0);
 }
 
 .main-content {
   flex: 1;
-  margin-left: 270px;
+  margin-left: 0;
   padding: 48px;
   min-height: 100vh;
-  transition: var(--transition);
+  transition: margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1), padding-left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   background: radial-gradient(circle at 80% 10%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
               radial-gradient(circle at 10% 90%, rgba(168, 85, 247, 0.04) 0%, transparent 50%);
 }
@@ -280,6 +285,7 @@ body {
 }
 
 .form-control {
+  width: 100%;
   background-color: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
@@ -309,6 +315,9 @@ select.form-control {
   background-position: right 16px center;
   background-size: 16px;
   padding-right: 40px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /* Button System */
@@ -559,7 +568,9 @@ select.form-control {
 
 /* Responsive Layout Settings */
 .menu-btn {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   color: var(--text-primary);
@@ -573,19 +584,58 @@ select.form-control {
   border-radius: var(--radius-sm);
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.sidebar-collapse-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
+}
+
+.sidebar-collapse-btn:hover {
+  background-color: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+/* Desktop Sidebar open/closed states */
+@media (min-width: 769px) {
+  .layout-container.sidebar-open .main-content {
+    margin-left: 270px;
+  }
+  
+  .layout-container.sidebar-closed .main-content {
+    padding-left: 80px;
+  }
+  
+  .layout-container.sidebar-open .menu-btn {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
   .menu-btn {
-    display: block;
+    display: flex;
   }
   
   .sidebar {
     transform: translateX(-100%);
   }
   
-  .sidebar.open {
+  .layout-container.sidebar-open .sidebar {
     transform: translateX(0);
+  }
+  
+  .sidebar-collapse-btn {
+    display: none;
   }
   
   .main-content {
@@ -595,6 +645,25 @@ select.form-control {
   
   .dashboard-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Staging Order Items layout */
+.staging-grid {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 16px;
+  align-items: end;
+}
+
+.staging-grid > * {
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .staging-grid {
+    grid-template-columns: 1fr;
+    align-items: stretch;
   }
 }
 

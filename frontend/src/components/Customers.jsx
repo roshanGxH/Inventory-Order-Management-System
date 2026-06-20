@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { api } from '../api';
 import { Plus, Search, Trash2, X } from 'lucide-react';
 
@@ -165,7 +166,7 @@ export default function Customers({ triggerToast }) {
       )}
 
       {/* Add Modal */}
-      {showAddModal && (
+      {showAddModal && createPortal(
         <div className="modal-overlay">
           <div className="modal-content">
             <div className="modal-header">
@@ -221,7 +222,8 @@ export default function Customers({ triggerToast }) {
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { api } from '../api';
 import { Plus, Eye, Trash2, X, PlusCircle, MinusCircle, FileText } from 'lucide-react';
 
@@ -281,7 +282,7 @@ export default function Orders({ triggerToast }) {
       )}
 
       {/* New Order placement modal */}
-      {showAddModal && (
+      {showAddModal && createPortal(
         <div className="modal-overlay">
           <div className="modal-content" style={{ maxWidth: '650px' }}>
             <div className="modal-header">
@@ -308,7 +309,7 @@ export default function Orders({ triggerToast }) {
               <div className="card" style={{ padding: '16px', marginBottom: '20px', backgroundColor: 'var(--bg-surface)' }}>
                 <h4 style={{ fontSize: '0.95rem', fontWeight: 600, marginBottom: '12px' }}>Staging Order Items</h4>
                 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 150px 100px', gap: '16px', alignItems: 'end' }}>
+                <div className="staging-grid">
                   <div className="form-group" style={{ marginBottom: 0 }}>
                     <label className="form-label">Select Product</label>
                     <select 
@@ -402,7 +403,7 @@ export default function Orders({ triggerToast }) {
                     className="btn btn-primary" 
                     onClick={handleAddItem}
                     disabled={!selectedProductId}
-                    style={{ height: '48px' }}
+                    style={{ height: '48px', minWidth: '120px' }}
                   >
                     Add
                   </button>
@@ -476,11 +477,12 @@ export default function Orders({ triggerToast }) {
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {/* Details Receipt Modal */}
-      {showDetailsModal && selectedOrder && (
+      {showDetailsModal && selectedOrder && createPortal(
         <div className="modal-overlay">
           <div className="modal-content" style={{ maxWidth: '600px' }}>
             <div className="modal-header">
@@ -588,7 +590,8 @@ export default function Orders({ triggerToast }) {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
